@@ -1,6 +1,8 @@
 import glob
 import os
+from tkinter.ttk import Style
 from xml.dom.minidom import Document
+from docx.enum.style import WD_STYLE_TYPE
 import docx
 
 # chosen_file = input("Choose file: \n")
@@ -17,13 +19,6 @@ def getText(filename): # use abs_file_path for filenames
         fullText.append(para.text)
     return '\n'.join(fullText)
 
-# def printTables(doc):
-#     for table in doc.tables:
-#         for row in table.rows:
-#             for cell in row.cells:
-#                 for paragraph in cell.paragraphs:
-#                     print(paragraph.text)
-#                 printTables(cell)
 
 def parseTable(table):
     data = []
@@ -41,14 +36,36 @@ def parseTable(table):
         # Construct a dictionary for this row, mapping
         # keys to values for this row
         row_data = dict(zip(keys, text))
+
         data.append(row_data)
 
         return data
+
+
+def companyStyle():
+    styles = document.styles
+    style = styles.add_style("Company", WD_STYLE_TYPE.PARAGRAPH)
+    font = style.font 
+    font.name = "Arial"
+    font.bold = True
+    font.size = docx.shared.Pt(18)
+
+def addCompanyName(table):
+    companyStyle()
+
+    name_row = table.rows[0].cells
+    company_name = name_row[0]
+    company_name.text = ""
+    
+    paragraph = company_name.add_paragraph("test", style="Company")
+    print(paragraph.style.name)
+    document.save(f"Output/{chosen_file}")
 
 document = docx.Document(abs_file_path)
 section = document.sections[0]
 header = section.header
 
+
 for table in header.tables:
-    print(parseTable(table))
+    addCompanyName(table)
 
