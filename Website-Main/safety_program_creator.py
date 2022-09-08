@@ -6,7 +6,7 @@ from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.table import WD_ALIGN_VERTICAL
 import docx
 
-company_name = input("Company name: \n")
+COMPANY_NAME = input("Company name: \n")
 chosen_file = input("Choose file: \n")
 # chosen_file = "abrasive blasting.docx"
 
@@ -58,7 +58,7 @@ def addCompanyName(table):
 
     name_row = table.rows[0].cells
     company_name = name_row[0]
-    company_name.text = company_name
+    company_name.text = COMPANY_NAME
     
     paragraph = company_name.paragraphs[0]
     paragraph.style = document.styles["Company"]
