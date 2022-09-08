@@ -3,10 +3,12 @@ import os
 from tkinter.ttk import Style
 from xml.dom.minidom import Document
 from docx.enum.style import WD_STYLE_TYPE
+from docx.enum.table import WD_ALIGN_VERTICAL
 import docx
 
-# chosen_file = input("Choose file: \n")
-chosen_file = "abrasive blasting.docx"
+company_name = input("Company name: \n")
+chosen_file = input("Choose file: \n")
+# chosen_file = "abrasive blasting.docx"
 
 script_dir = os.path.dirname(__file__) # absolute dir the script is in
 rel_path = f"Safety Programs/{chosen_file}"
@@ -45,6 +47,7 @@ def parseTable(table):
 def companyStyle():
     styles = document.styles
     style = styles.add_style("Company", WD_STYLE_TYPE.PARAGRAPH)
+    
     font = style.font 
     font.name = "Arial"
     font.bold = True
@@ -55,10 +58,11 @@ def addCompanyName(table):
 
     name_row = table.rows[0].cells
     company_name = name_row[0]
-    company_name.text = ""
+    company_name.text = company_name
     
-    paragraph = company_name.add_paragraph("test", style="Company")
-    print(paragraph.style.name)
+    paragraph = company_name.paragraphs[0]
+    paragraph.style = document.styles["Company"]
+    company_name.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
     document.save(f"Output/{chosen_file}")
 
 document = docx.Document(abs_file_path)
