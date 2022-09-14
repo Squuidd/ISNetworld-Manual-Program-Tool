@@ -86,7 +86,7 @@ def addCompanyName(table, doc, style):
 def manualTitle(table, doc, style):
     name_row = table.rows[0].cells
     company_name = name_row[0]
-    company_name.text = f"{COMPANY_NAME}\n\n"
+    company_name.text = f"{COMPANY_NAME}\n"
     
     paragraph = company_name.paragraphs[0]
     paragraph.style = doc.styles[style]
@@ -94,13 +94,13 @@ def manualTitle(table, doc, style):
 
     subtext = company_name.add_paragraph("Safety, Health, and Environmental Manual")
     subtext.style = doc.styles["manual_subtext"]
-    #company_name.vertical_alignment = WD_ALIGN_HORIZONTAL.CENTER
+    paragraph.alignment = 1
+    subtext.alignment = 1
 
     save_path = f"Output/{chosen_file}"
     doc.save(save_path)
     createPDF(save_path, save_path)    
 
-#TODO add another func like above but that doesnt go in to header.
 
 
 
