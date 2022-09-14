@@ -3,7 +3,7 @@ import os
 from tkinter.ttk import Style
 from xml.dom.minidom import Document
 from docx.enum.style import WD_STYLE_TYPE
-from docx.enum.table import WD_ALIGN_VERTICAL
+#from docx.enum.table import WD_ALIGN_HORIZONTAL
 import docx
 from docx2pdf import convert
 
@@ -45,55 +45,94 @@ def parseTable(table):
 
         return data
 
-def companyStyle(document):
+def createStyles(document):
     styles = document.styles
-    style = styles.add_style("Company", WD_STYLE_TYPE.PARAGRAPH)
-    
-    font = style.font 
-    font.name = "Arial"
-    font.bold = True
-    font.size = docx.shared.Pt(18)
 
-def addCompanyName(table, doc):
-    #companyStyle(doc)
+    header_style = styles.add_style("table_header", WD_STYLE_TYPE.PARAGRAPH)
+    header_font = header_style.font 
+    header_font.name = "Arial"
+    header_font.bold = True
+    header_font.size = docx.shared.Pt(18)
 
+    manual_title_style = styles.add_style("manual_title", WD_STYLE_TYPE.PARAGRAPH)
+    manual_title_font = manual_title_style.font
+    manual_title_font.name = "Cambria"
+    manual_title_font.bold = True
+    manual_title_font.size = docx.shared.Pt(26)
+
+    manual_subtext_style = styles.add_style("manual_subtext", WD_STYLE_TYPE.PARAGRAPH)
+    manual_subtext_font = manual_subtext_style.font
+    manual_subtext_font.name = "Cambria"
+    manual_subtext_font.bold = True
+    manual_subtext_font.size = docx.shared.Pt(16)
+
+
+
+
+def addCompanyName(table, doc, style):
     name_row = table.rows[0].cells
     company_name = name_row[0]
-    company_name.text = COMPANY_NAME
+    company_name.text = f"{COMPANY_NAME}"
     
     paragraph = company_name.paragraphs[0]
-    #paragraph.style = doc.styles["Company"]
-    company_name.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+    paragraph.style = doc.styles[style]
+    #company_name.vertical_alignment = WD_ALIGN_HORIZONTAL.CENTER
 
     save_path = f"Output/{chosen_file}"
     doc.save(save_path)
     createPDF(save_path, save_path)
 
+
+def manualTitle(table, doc, style):
+    name_row = table.rows[0].cells
+    company_name = name_row[0]
+    company_name.text = f"{COMPANY_NAME}\n\n"
+    
+    paragraph = company_name.paragraphs[0]
+    paragraph.style = doc.styles[style]
+
+
+    subtext = company_name.add_paragraph("Safety, Health, and Environmental Manual")
+    subtext.style = doc.styles["manual_subtext"]
+    #company_name.vertical_alignment = WD_ALIGN_HORIZONTAL.CENTER
+
+    save_path = f"Output/{chosen_file}"
+    doc.save(save_path)
+    createPDF(save_path, save_path)    
+
 #TODO add another func like above but that doesnt go in to header.
+
+
 
 def createPDF(start_path, save_path):
     size = len(start_path)
     pdf_name = f"{start_path[:size - 5]}.pdf"
     convert(start_path, pdf_name)
 
-def createSafetyProgram(path, safety_manual : bool):
+def createSafetyProgram(path):
     document = docx.Document(path)
+    createStyles(document)
+
+    section = document.sections[0]
+    header = section.header
+    for table in header.tables:
+        addCompanyName(table, document, "table_header")
+    
+
+def createSafetyManual(path):
+    document = docx.Document(path)
+    createStyles(document)
 
     page_count = len(document.sections)
 
-    if not safety_manual:
-        section = document.sections[0]
+    for i in range(page_count):
+        if i == 0:
+            section = document.sections[i]
+            manualTitle(document.tables[0], document, "manual_title")
+        section = document.sections[i]
         header = section.header
         for table in header.tables:
-            addCompanyName(table, document)
-    
-    else:
-        for i in range(page_count):
-            section = document.sections[i]
-            header = section.header
-            for table in header.tables:
-                addCompanyName(table, document)
-
+            addCompanyName(table, document, "table_header")
 
 def replace_string(filename, c_name):
     doc = docx.Document(f"Safety Programs/{filename}")
@@ -118,4 +157,5 @@ def createTOC():
     pass
 
 #replace_string(chosen_file, COMPANY_NAME)
-createSafetyProgram(findPath(chosen_file), True)
+# createSafetyProgram(findPath(chosen_file))
+createSafetyManual(findPath(chosen_file))
