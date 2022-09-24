@@ -6,10 +6,11 @@ from docx.enum.style import WD_STYLE_TYPE
 #from docx.enum.table import WD_ALIGN_HORIZONTAL
 import docx
 from docx2pdf import convert
+from simplify_docx import simplify
 
-COMPANY_NAME = input("Company name: \n")
-chosen_file = input("Choose file: \n")
-# chosen_file = "abrasive blasting.docx"
+
+
+
 
 def findPath(file_name):
     script_dir = os.path.dirname(__file__) # absolute dir the script is in
@@ -119,12 +120,13 @@ def createSafetyProgram(path):
         addCompanyName(table, document, "table_header")
     
 
-def createSafetyManual(path):
+def createSafetyManual(path, programs):
     document = docx.Document(path)
     createStyles(document)
 
     page_count = len(document.sections)
 
+    # Adds headers and titles
     for i in range(page_count):
         if i == 0:
             section = document.sections[i]
@@ -133,29 +135,47 @@ def createSafetyManual(path):
         header = section.header
         for table in header.tables:
             addCompanyName(table, document, "table_header")
+    
+    #TODO get text from programs
+    # for program in programs:
+    #     print(getText(program))
+ 
+def get_para_data(output_doc_name, paragraph):
+    """
+    Write the run to the new file and then set its font, bold, alignment, color etc. data.
+    """
 
-def replace_string(filename, c_name):
-    doc = docx.Document(f"Safety Programs/{filename}")
-    title = doc.paragraphs[0]
+    output_para = output_doc_name.add_paragraph()
+    for run in paragraph.runs:
+        output_run = output_para.add_run(run.text)
+        # Run's bold data
+        output_run.bold = run.bold
+        # Run's italic data
+        output_run.italic = run.italic
+        # Run's underline data
+        output_run.underline = run.underline
+        # Run's color data
+        output_run.font.color.rgb = run.font.color.rgb
+        # Run's font data
+        output_run.style.name = run.style.name
+    # Paragraph's alignment data
+    output_para.paragraph_format.alignment = paragraph.paragraph_format.alignment
 
-    title.text = COMPANY_NAME
-
-
-    print(title.text)
-    # for p in doc.paragraphs:
-    #     if 'Company Name Here' in p.text:
-    #         inline = p.runs
-    #         # Loop added to work with runs (strings with same style)
-    #         for i in range(len(inline)):
-    #             if 'Company Name Here' in inline[i].text:
-    #                 text = inline[i].text.replace('Company Name Here', c_name)
-    #                 inline[i].text = text
-    #         print(p.text)
-    doc.save("Output/test.docx")
-
-def createTOC():
-    pass
 
 #replace_string(chosen_file, COMPANY_NAME)
 # createSafetyProgram(findPath(chosen_file))
-createSafetyManual(findPath(chosen_file))
+
+# COMPANY_NAME = "Test Name LLC."
+# chosen_file = "safety manual.docx"
+
+# chosen_programs = [findPath("cranes.docx"), findPath("silica.docx"), findPath("water survival.docx")]
+
+# createSafetyManual(findPath(chosen_file), chosen_programs)
+input_doc = docx.Document(findPath('cranes.docx'))
+output_doc = docx.Document()
+
+for para in input_doc.paragraphs:
+    get_para_data(output_doc, para)
+
+output_doc.save('OutputDoc.docx')
+
