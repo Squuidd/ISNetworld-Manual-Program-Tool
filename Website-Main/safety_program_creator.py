@@ -6,7 +6,7 @@ from docx.enum.style import WD_STYLE_TYPE
 #from docx.enum.table import WD_ALIGN_HORIZONTAL
 import docx
 from docx2pdf import convert
-from simplify_docx import simplify
+
 
 
 
@@ -165,17 +165,20 @@ def get_para_data(output_doc_name, paragraph):
 #replace_string(chosen_file, COMPANY_NAME)
 # createSafetyProgram(findPath(chosen_file))
 
-# COMPANY_NAME = "Test Name LLC."
-# chosen_file = "safety manual.docx"
+COMPANY_NAME = "Test Name LLC."
+chosen_file = "safety manual.docx"
 
-# chosen_programs = [findPath("cranes.docx"), findPath("silica.docx"), findPath("water survival.docx")]
+chosen_programs = [findPath("cranes.docx"), findPath("silica.docx"), findPath("water survival.docx")]
 
-# createSafetyManual(findPath(chosen_file), chosen_programs)
-input_doc = docx.Document(findPath('cranes.docx'))
-output_doc = docx.Document()
+createSafetyManual(findPath(chosen_file), chosen_programs)
 
-for para in input_doc.paragraphs:
-    get_para_data(output_doc, para)
 
-output_doc.save('OutputDoc.docx')
+
+# input_doc = docx.Document(findPath('cranes.docx'))
+# output_doc = docx.Document()
+
+# for para in input_doc.paragraphs:
+#     get_para_data(output_doc, para)
+
+# output_doc.save('OutputDoc.docx')
 
