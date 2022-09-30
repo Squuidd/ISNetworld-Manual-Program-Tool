@@ -43,6 +43,8 @@ def main(
     }
 
     main_document.render(ctx)
+
     main_document.save('demo.docx')
+    print(etree.tostring(main_document.element.body, encoding='unicode', pretty_print=True))
 
 main("safety_manual.docx", ["aerial_lifts.docx", "aerial_lifts.docx"], "Walter White")
