@@ -7,6 +7,8 @@ import re
 
 import types
 
+import os
+
 class DummyDoc(Subdoc):
     def __init__(self, tpl, xml):
         super().__init__(tpl)
@@ -14,6 +16,12 @@ class DummyDoc(Subdoc):
 
     def _get_xml(self):
         return self.xml
+
+def findPath(file_name):
+    script_dir = os.path.dirname(__file__) # absolute dir the script is in
+    rel_path = f"../Safety Programs/{file_name}"
+    abs_file_path = os.path.join(script_dir, rel_path)
+    return abs_file_path
 
 def main(
         file,
@@ -44,7 +52,7 @@ def main(
 
     main_document.render(ctx)
 
-    main_document.save('demo.docx')
+    main_document.save('Output/new_safety_manual.docx')
     print(etree.tostring(main_document.element.body, encoding='unicode', pretty_print=True))
 
-main("safety_manual.docx", ["aerial_lifts.docx", "aerial_lifts.docx"], "Walter White")
+main(findPath("safety_manual.docx"), [findPath("aerial lifts.docx"), findPath("cranes.docx"), findPath("cadmium.docx")], "Test Name LLC.")
