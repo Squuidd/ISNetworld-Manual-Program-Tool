@@ -20,9 +20,10 @@ body
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 150px;
+    height: 300px;
 }
 
+/* button styles  */
 .btn 
 {
     border: none;
@@ -40,8 +41,56 @@ body
     background: #acacac;
 }
 
+/* form styles */
+form 
+{
+    background-color: #e7e7e7;
+    width: 300px;
+    height: 44px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+input 
+{
+    all: unset;
+    font: 16px system-ui;
+    color: #fff;
+    height: 100%;
+    width: 100%;
+    padding: 6px 10px;
+}
+
+/* edits placeholder text */
+::placeholder 
+{
+    color: #fff;
+    opacity: 0.7; 
+}
+
+/* create search button */
+.search_btn
+{
+    all: unset;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+}
+  
+svg 
+{
+    color: #fff;
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
+    padding: 10px;
+}
+
+
 /* horizontally aligns buttons */
-.btn_parent 
+.horizontal_aligner 
 {
     display: flex;
 }
@@ -49,11 +98,22 @@ body
 /* changes spacing between buttons */
 #btn_container_left
 {
-    margin-right: 3%;
+    margin-right: 2%;
 }
 
 #btn_container_right
 {
-    margin-left: 3%;
+    margin-left: 2%;
 }
 
+#form_container_left
+{
+    margin-right: 7%;
+}
+
+#form_container_right
+{
+    margin-left: 7%;
+}
+
+7
