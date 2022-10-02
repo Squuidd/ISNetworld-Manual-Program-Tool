@@ -4,6 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, form
 
 app = Flask(__name__, template_folder="templates")
+app.debug = True
 
 @app.route("/")
 def home():

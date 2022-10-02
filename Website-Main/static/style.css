@@ -1,0 +1,59 @@
+
+body 
+{
+    background-color: whitesmoke;
+}
+
+.center_parent 
+{
+    width: 100%;
+}
+
+.center_child
+{
+    display: table;
+    margin: 0 auto;  
+}
+
+.vertical_spacer 
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px;
+}
+
+.btn 
+{
+    border: none;
+    background-color: inherit;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    background: #e7e7e7;
+    color: black;
+}
+
+.btn:hover
+{
+    background: #acacac;
+}
+
+/* horizontally aligns buttons */
+.btn_parent 
+{
+    display: flex;
+}
+
+/* changes spacing between buttons */
+#btn_container_left
+{
+    margin-right: 3%;
+}
+
+#btn_container_right
+{
+    margin-left: 3%;
+}
+
