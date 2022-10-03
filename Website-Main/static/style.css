@@ -1,7 +1,12 @@
 
 body 
 {
-    background-color: whitesmoke;
+    background-color: rgb(18, 18, 18);
+}
+
+h1
+{
+    color: rgb(255, 255, 255);
 }
 
 .center_parent 
@@ -32,19 +37,19 @@ body
     font-size: 16px;
     cursor: pointer;
     display: inline-block;
-    background: #e7e7e7;
-    color: black;
+    background: #5a5a5a;
+    color: rgb(255, 255, 255);
 }
 
 .btn:hover
 {
-    background: #acacac;
+    background: #797979;
 }
 
 /* form styles */
 form 
 {
-    background-color: #e7e7e7;
+    background-color: #5a5a5a;
     width: 300px;
     height: 44px;
     border-radius: 5px;
@@ -57,7 +62,7 @@ input
 {
     all: unset;
     font: 16px system-ui;
-    color: #fff;
+    color: #ffffff;
     height: 100%;
     width: 100%;
     padding: 6px 10px;
@@ -116,4 +121,3 @@ svg
     margin-left: 7%;
 }
 
-7

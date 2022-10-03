@@ -67,10 +67,13 @@ def create_manual(
 
     main_document.save(save_path)
     
+
+    # updates TOC *windows only*
     script_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
     file_name = save_path
     file_path = os.path.join(script_dir, file_name)
     update_toc(file_path)
+
     print(etree.tostring(main_document.element.body, encoding='unicode', pretty_print=True))
 
 def create_program(
