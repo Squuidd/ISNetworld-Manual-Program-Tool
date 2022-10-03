@@ -10,6 +10,9 @@ import types
 
 import os
 
+import win32com.client
+import inspect, os
+
 class DummyDoc(Subdoc):
     def __init__(self, tpl, xml):
         super().__init__(tpl)
@@ -23,6 +26,13 @@ def findPath(file_name):
     rel_path = f"Safety Programs/{file_name}"
     abs_file_path = os.path.join(script_dir, rel_path)
     return abs_file_path
+
+def update_toc(docx_file):
+    word = win32com.client.DispatchEx("Word.Application")
+    doc = word.Documents.Open(docx_file)
+    doc.TablesOfContents(1).Update()
+    doc.Close(SaveChanges=True)
+    word.Quit()
 
 def create_manual(
         file,
@@ -53,7 +63,14 @@ def create_manual(
 
     main_document.render(ctx)
 
-    main_document.save('Output/new_safety_manual.docx')
+    save_path = 'Output/new_safety_manual.docx'
+
+    main_document.save(save_path)
+    
+    script_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    file_name = save_path
+    file_path = os.path.join(script_dir, file_name)
+    update_toc(file_path)
     print(etree.tostring(main_document.element.body, encoding='unicode', pretty_print=True))
 
 def create_program(
@@ -71,8 +88,9 @@ def create_program(
     main_document.save('Output/new_program.docx')
     pass
 
-#create_manual(findPath("safety_manual.docx"), [findPath("aerial lifts.docx"), findPath("cranes.docx"), findPath("cadmium.docx")], "Test Name LLC.")
+create_manual(findPath("safety_manual.docx"), [findPath("aerial lifts.docx"), findPath("cranes.docx"), findPath("cadmium.docx")], "Test Name LLC.")
+#update_toc('Output/new_safety_manual.docx')
 
-create_program(findPath("cranes.docx"), "Test Name LLC.")
+# create_program(findPath("cranes.docx"), "Test Name LLC.")
 
 
