@@ -1,14 +1,11 @@
-from enum import unique
-from unicodedata import name
+
 import sqlalchemy.engine
 from flask_sqlalchemy import SQLAlchemy
 
-from main import app
+from main import db
 import safety_program_creator as spc
 
 import os
-
-db = SQLAlchemy(app)
 
 class Safety_Program(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -48,7 +45,7 @@ db.create_all()
 db.session.commit()
 #update_db()
 
-
+print(parse_db())
 
 # programs = db.session.query(Safety_Program)
 # # print(programs.all()[0].name)

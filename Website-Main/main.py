@@ -4,6 +4,8 @@ from flask import Flask, render_template, request
 from flask_session import Session
 from flask import jsonify 
 
+import sqlalchemy.engine
+from flask_sqlalchemy import SQLAlchemy
 
 import os
 
@@ -15,8 +17,10 @@ app.secret_key = os.urandom(16)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///safety_program.db"
 app.config['SESSION_TYPE'] = "filesystem"
 
-import database as db
+import database
 
+### Init db
+db = SQLAlchemy(app)
 
 @app.route("/")
 def home():
@@ -26,15 +30,13 @@ def home():
 def p_db():
     if request.method == 'GET':
         sp_names = {
-            "Name": db.parse_db()
+            "Names": database.parse_db()
         }
         return jsonify(sp_names)
 
     if request.method == 'POST':
         print(request.get_json())
         return 'Success', 200
-
-
 
 if __name__ == "__main__":
     app.run()
