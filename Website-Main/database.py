@@ -35,9 +35,22 @@ def update_db():
     db.session.commit()
     db.session.close_all()
 
-update_db()
+# Only returns list of program names
+def parse_db():
+    programs = db.session.query(Safety_Program)
+    program_names = []
+    for program in programs:
+        program_names.append(program.name)
+        # print(program.name)
+    return program_names
 
-programs = db.session.query(Safety_Program)
-# print(programs.all()[0].name)
-for program in programs:
-    print(program.name)
+db.create_all()
+db.session.commit()
+#update_db()
+
+
+
+# programs = db.session.query(Safety_Program)
+# # print(programs.all()[0].name)
+# for program in programs:
+#     print(program.name)

@@ -91,7 +91,7 @@ def create_program(
     main_document.save('Output/new_program.docx')
     pass
 
-create_manual(findPath("safety_manual.docx"), [findPath("aerial lifts.docx"), findPath("cranes.docx"), findPath("cadmium.docx")], "Test Name LLC.")
+#create_manual(findPath("safety_manual.docx"), [findPath("aerial lifts.docx"), findPath("cranes.docx"), findPath("cadmium.docx")], "Test Name LLC.")
 #update_toc('Output/new_safety_manual.docx')
 
 # create_program(findPath("cranes.docx"), "Test Name LLC.")
