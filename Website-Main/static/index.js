@@ -27,11 +27,13 @@ async function populateUnselected()
     let names = await parsePromise(getSP());
 
     for(let i = 0; i < names.length; i++)
-    {
-        var unselected_html = '<button></button>'
+    {   
+        var node = document.createElement("button");
+        var textnode = document.createTextNode(names[i]);
+        node.appendChild(textnode);
+        document.getElementById("unselected_parent").appendChild(node);
     }
-
-    document.getElementById("unselected_programs").innerHTML = val[0];
+    //var unselected_html = '<button class="safety_program">test </button>'
 }
 
 populateUnselected();
