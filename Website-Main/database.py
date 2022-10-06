@@ -12,6 +12,7 @@ class Safety_Program(db.Model):
     name = db.Column(db.String(), unique=False, nullable=False)
     path = db.Column(db.String(), unique=False, nullable=False)
 
+
 db.create_all()
 db.session.commit()
 
@@ -35,17 +36,21 @@ def update_db():
 # Only returns list of program names
 def parse_db():
     programs = db.session.query(Safety_Program)
-    program_names = []
+    docs = []
+
     for program in programs:
-        program_names.append(program.name)
+        program_data = []
+        program_data.append(program.name)
+        program_data.append(program.id)
+        docs.append(program_data)
         # print(program.name)
-    return program_names
+    return docs
 
 db.create_all()
 db.session.commit()
-#update_db()
 
-print(parse_db())
+
+#update_db()
 
 # programs = db.session.query(Safety_Program)
 # # print(programs.all()[0].name)

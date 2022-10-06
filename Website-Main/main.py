@@ -19,7 +19,7 @@ app.config['SESSION_TYPE'] = "filesystem"
 
 import database
 
-### Init db
+# Init db
 db = SQLAlchemy(app)
 
 @app.route("/")
@@ -30,7 +30,7 @@ def home():
 def p_db():
     if request.method == 'GET':
         sp_names = {
-            "Names": database.parse_db()
+            "Programs": database.parse_db()
         }
         return jsonify(sp_names)
 
