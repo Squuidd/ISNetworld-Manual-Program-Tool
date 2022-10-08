@@ -28,12 +28,25 @@ async function populateUnselected()
 
     for(let i = 0; i < names.length; i++)
     {   
+        //TODO refactor this
         var node = document.createElement("button");
+        node.classList.add("program_btn");
+        node.onclick = moveList;
+
         var textnode = document.createTextNode(names[i]);
+
         node.appendChild(textnode);
+        var lineBreak = document.createElement("br");
+
         document.getElementById("unselected_parent").appendChild(node);
+        document.getElementById("unselected_parent").appendChild(lineBreak);
     }
-    //var unselected_html = '<button class="safety_program">test </button>'
+}
+
+async function moveList()
+{
+    alert(this);
+
 }
 
 populateUnselected();
