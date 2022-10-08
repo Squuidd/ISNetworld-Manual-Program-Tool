@@ -20,13 +20,13 @@ h1
     margin: 0 auto;  
 }
 
-.vertical_spacer 
+/* .vertical_spacer 
 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 3900px;
-}
+} */
 
 /* button styles  */
 .create_btn
