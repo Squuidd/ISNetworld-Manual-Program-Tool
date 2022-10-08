@@ -43,7 +43,7 @@
           
           <div class="center_child" id="form_container_left">
             <form id="form" role="search">
-              <input type="search" id="query" name="q"
+              <input type="search" id="nonselected_query" onkeyup="searchNonSelected()" name="q"
               placeholder="Search Non Selected..."
               aria-label="Search through site content">
               <button class="search_btn">
@@ -61,7 +61,7 @@
 
           <div class="center_child" id="form_container_right">
             <form id="form" role="search">
-              <input type="search" id="query" name="q"
+              <input type="search" id="selected_query" name="q"
               placeholder="Search Selected..."
               aria-label="Search through site content">
               <button class="search_btn">
