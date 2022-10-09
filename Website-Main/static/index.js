@@ -107,5 +107,34 @@ function searchSelected()
     }
 }
 
+async function getSelected()
+{
+    let selectedElements = document.getElementsByClassName("selected_program");
+    let selectedPrograms = [];
+    
+    for(let i = 0; i < selectedElements.length; i++)
+    {
+        selectedPrograms.push(selectedElements[i].innerHTML);
+    }
+
+    let data = { 
+        programs: selectedPrograms, 
+        manual: false
+    };
+
+    fetch('/safety_programs', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    return data;
+}
+
+
+
+
+
 populateUnselected();
 
