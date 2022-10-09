@@ -34,38 +34,40 @@ async function populateUnselected()
 
     for(let i = 0; i < program_data.length; i++)
     {   
-        //TODO refactor this
-        var node = document.createElement("button");
-        node.classList.add("program_btn");
-        node.classList.add("nonselected_program")
+        //TODO refactor thi
+        
+        var btn_node = document.createElement("li");
+        btn_node.classList.add("program_btn");
+        btn_node.classList.add("nonselected_program")
 
-        node.id = "program_" + program_data[i][1];
-        node.onclick = moveList;
+        btn_node.id = "program_" + program_data[i][1];
+        btn_node.onclick = moveList;
 
         var textnode = document.createTextNode(program_data[i][0]);
 
-        node.appendChild(textnode);
-        var lineBreak = document.createElement("br");
-        lineBreak.id = node.id + "_br";
+        btn_node.appendChild(textnode);
+        //var lineBreak = document.createElement("br");
+        //lineBreak.id = btn_node.id + "_br";
 
-        unselected_parent.appendChild(node);
-        unselected_parent.appendChild(lineBreak);
+        unselected_parent.appendChild(btn_node);
+        btn_node.style.display = "list-item";
+        //unselected_parent.appendChild(lineBreak);
     }
 
-    var lineBreak = document.createElement("br");
-    unselected_parent.prepend(lineBreak);
+    //var lineBreak = document.createElement("br");
+    //unselected_parent.prepend(lineBreak);
 }
 
 async function moveList()
 {   
-    old_br = document.getElementById(this.id + "_br");
-    old_br.remove();
+    //old_br = document.getElementById(this.id + "_br");
+    //old_br.remove();
 
     parent_id = this.parentNode.id;
 
     program_btn = document.getElementById(this.id);
-    var lineBreak = document.createElement("br");
-    lineBreak.id = this.id + "_br";
+    //var lineBreak = document.createElement("br");
+    //lineBreak.id = this.id + "_br";
 
     if(parent_id == "selected_parent")
     {   
@@ -81,7 +83,7 @@ async function moveList()
     }
     
     parent.prepend(program_btn);
-    parent.prepend(lineBreak);
+    //parent.prepend(lineBreak);
 }
 
 function searchNonSelected()
@@ -95,13 +97,13 @@ function searchNonSelected()
             console.log(x[i].style.display);
             x[i].style.display="none";
 
-            let br = document.getElementById(x[i].id + "_br");
-            br.style.display="none";
+            //let br = document.getElementById(x[i].id + "_br");
+            //br.style.display="none";
         }
         else {
             x[i].style.display="list-item";   
-            let br = document.getElementById(x[i].id + "_br");
-            br.style.display="list-item";              
+            //let br = document.getElementById(x[i].id + "_br");
+            //br.style.display="list-item";              
         }
     }
 }
