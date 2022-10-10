@@ -11,6 +11,7 @@ import types
 import os
 
 import win32com.client
+
 import inspect, os
 
 class DummyDoc(Subdoc):
@@ -39,6 +40,7 @@ def create_manual(
         safety_documents,
         company_name
 ):
+   
     main_document = DocxTemplate(file)
     # Create subdoc to insert into main document
     main_document.init_docx() # Not sure what the point of this is but lib normally does it before init Subdoc.
@@ -69,10 +71,10 @@ def create_manual(
     
 
     # updates TOC *windows only*
-    script_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-    file_name = save_path
-    file_path = os.path.join(script_dir, file_name)
-    update_toc(file_path)
+    # script_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    # file_name = save_path
+    # file_path = os.path.join(script_dir, file_name)
+    # update_toc(file_path)
 
     print(etree.tostring(main_document.element.body, encoding='unicode', pretty_print=True))
 

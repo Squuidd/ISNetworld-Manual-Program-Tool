@@ -107,7 +107,7 @@ function searchSelected()
     }
 }
 
-async function getSelected()
+async function getSelected(is_manual)
 {
     let selectedElements = document.getElementsByClassName("selected_program");
     let selectedPrograms = [];
@@ -119,7 +119,7 @@ async function getSelected()
 
     let data = { 
         programs: selectedPrograms, 
-        manual: false
+        manual: is_manual
     };
 
     fetch('/safety_programs', {
@@ -132,8 +132,17 @@ async function getSelected()
     return data;
 }
 
-
-
+function showDownload(template)
+{
+    if(template == "manual")
+    {
+        document.getElementById('sm_download').style.display = "block";
+    }
+    else if(template == "program")
+    {
+        document.getElementById('sp_download').style.display = "block";
+    }
+}
 
 
 populateUnselected();

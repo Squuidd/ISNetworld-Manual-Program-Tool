@@ -46,11 +46,11 @@ def parse_db():
         # print(program.name)
     return docs
 
+# update_db()
 db.create_all()
 db.session.commit()
 
 
-#update_db()
 
 # programs = db.session.query(Safety_Program)
 # # print(programs.all()[0].name)

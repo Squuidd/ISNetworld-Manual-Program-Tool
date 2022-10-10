@@ -23,15 +23,23 @@
         <div class="horizontal_aligner center_parent"> 
 
           <div class="center_child" id="btn_container_left">
-            <button class="create_btn" onclick="getSelected()">
+            <button class="create_btn" onclick="getSelected(true); showDownload('manual')">
               Create Safety Manual
             </button>
+            <br>
+            <p id="sm_download" style="display: none;">
+              <a href="{{ url_for('.download_sm') }}">Download Safety Manual</a>
+            </p>
           </div>
 
           <div class="center_child" id="btn_container_right">
-            <button class="create_btn">
+            <button class="create_btn" onclick="getSelected(false); showDownload('program')")>
               Create Safety Program
             </button>
+            <br>
+            <p id="sp_download" style="display: none;">
+              <a href="{{ url_for('.download_sm') }}">Download Safety Program</a>
+            </p>
           </div>
 
         </div>
