@@ -83,6 +83,8 @@ def create_program(
         company_name:str
 ):  
 
+    paths = []
+
     for file in files:
         main_document = DocxTemplate(file)
 
@@ -94,7 +96,11 @@ def create_program(
 
         filename = os.path.basename(file)
 
-        main_document.save(f'Output/{filename}')
+        save_path = f'Output/Programs/{filename}'
+        paths.append(save_path)
+        main_document.save(save_path)
+
+    return paths
        
 
 #create_manual(findPath("safety_manual.docx"), [findPath("aerial lifts.docx"), findPath("cranes.docx"), findPath("cadmium.docx")], "Test Name LLC.")

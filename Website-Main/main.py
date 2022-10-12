@@ -1,5 +1,7 @@
 #from crypt import methods
 import json
+from zipfile import ZipFile
+
 from flask import Flask, render_template, request, send_file
 from flask_session import Session
 from flask import jsonify 
@@ -24,8 +26,6 @@ import database
 # Init db
 db = SQLAlchemy(app)
 
-
-
 def convert_to_path(programs : list):
     output = []
     for program in programs:
@@ -33,6 +33,14 @@ def convert_to_path(programs : list):
         path = spc.findPath(program)
         output.append(path)
     return output
+
+def zip_files(programs : list):
+    zipObj = ZipFile('Output/programs.zip', 'w')
+
+    for program in programs:
+        zipObj.write(program)
+    
+    zipObj.close()
 
 @app.route("/")
 def home():
@@ -61,10 +69,13 @@ def p_db():
                 company_name="Test Name 1 LLC."
             )
         else:
-            spc.create_program(
+            paths = spc.create_program(
                 files=convert_to_path(programs=program_list),
                 company_name="Test Name 1 LLC."
             )
+
+            zip_files(paths)
+
             print("program")
         
         return 'Success', 200
@@ -76,8 +87,8 @@ def download_sm():
 
 @app.route("/download_sp")
 def download_sp():
-    # return zip
-    pass
+    path = "Output/programs.zip"
+    return send_file(path, as_attachment=True)
 
 
 
