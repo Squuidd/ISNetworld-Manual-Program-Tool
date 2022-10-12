@@ -61,7 +61,11 @@ def p_db():
                 company_name="Test Name 1 LLC."
             )
         else:
-            spc.create_program()
+            spc.create_program(
+                files=convert_to_path(programs=program_list),
+                company_name="Test Name 1 LLC."
+            )
+            print("program")
         
         return 'Success', 200
 
@@ -71,8 +75,9 @@ def download_sm():
     return send_file(path, as_attachment=True)
 
 @app.route("/download_sp")
-def dowload_sp():
-    files = []
+def download_sp():
+    # return zip
+    pass
 
 
 

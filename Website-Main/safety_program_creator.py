@@ -79,23 +79,27 @@ def create_manual(
     print(etree.tostring(main_document.element.body, encoding='unicode', pretty_print=True))
 
 def create_program(
-        file, 
-        company_name
-):
-    main_document = DocxTemplate(file)
+        files:list, 
+        company_name:str
+):  
 
-    ctx = {
-        "company_name": company_name
-    }
+    for file in files:
+        main_document = DocxTemplate(file)
 
-    main_document.render(ctx)
+        ctx = {
+            "company_name": company_name
+        }
 
-    main_document.save('Output/new_program.docx')
-    pass
+        main_document.render(ctx)
+
+        filename = os.path.basename(file)
+
+        main_document.save(f'Output/{filename}')
+       
 
 #create_manual(findPath("safety_manual.docx"), [findPath("aerial lifts.docx"), findPath("cranes.docx"), findPath("cadmium.docx")], "Test Name LLC.")
 #update_toc('Output/new_safety_manual.docx')
 
-# create_program(findPath("cranes.docx"), "Test Name LLC.")
+#create_program(findPath("aerial lifts.docx"), "Test Name.")
 
 
