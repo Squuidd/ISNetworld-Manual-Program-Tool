@@ -56,9 +56,10 @@ def p_db():
 
     if request.method == 'POST':
         json_data = request.get_json()
+        
         program_list = json_data["programs"]
-
         is_manual = json_data["manual"]
+        company_name = json_data["company_name"]
         
         print(convert_to_path(programs=program_list), is_manual)
 
@@ -66,12 +67,12 @@ def p_db():
             spc.create_manual(  
                 file=spc.findPath("safety_manual.docx"),
                 safety_documents= convert_to_path(programs=program_list),
-                company_name="Test Name 1 LLC."
+                company_name=company_name
             )
         else:
             paths = spc.create_program(
                 files=convert_to_path(programs=program_list),
-                company_name="Test Name 1 LLC."
+                company_name=company_name
             )
 
             zip_files(paths)
@@ -89,8 +90,6 @@ def download_sm():
 def download_sp():
     path = "Output/programs.zip"
     return send_file(path, as_attachment=True)
-
-
 
 
 if __name__ == "__main__":

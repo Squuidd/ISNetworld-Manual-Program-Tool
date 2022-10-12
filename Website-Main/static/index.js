@@ -107,10 +107,20 @@ function searchSelected()
     }
 }
 
+function getName()
+{
+    let name = document.getElementById('company_name').value;
+    alert(name);
+    // check that there is a name
+    return name;
+}
+
 async function getSelected(is_manual)
 {
     let selectedElements = document.getElementsByClassName("selected_program");
     let selectedPrograms = [];
+
+    let company_name = getName();
     
     for(let i = 0; i < selectedElements.length; i++)
     {
@@ -119,7 +129,8 @@ async function getSelected(is_manual)
 
     let data = { 
         programs: selectedPrograms, 
-        manual: is_manual
+        manual: is_manual,
+        company_name: company_name 
     };
 
     fetch('/safety_programs', {
