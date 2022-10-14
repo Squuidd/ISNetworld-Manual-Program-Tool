@@ -125,7 +125,17 @@ async function generateDocument(is_manual) {
             body: JSON.stringify(data),
         }
     )
-    saveBlob(await response.blob(), "manual.docx")
+
+    // TODO generate names?
+    let filename
+    if (is_manual) {
+        filename = "Manual.docx"
+    }
+    else {
+        filename = "Programs.zip"
+    }
+
+    saveBlob(await response.blob(), filename)
 }
 
 
