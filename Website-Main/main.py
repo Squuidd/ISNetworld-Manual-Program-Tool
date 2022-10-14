@@ -1,6 +1,5 @@
 #from crypt import methods
 import json
-from zipfile import ZipFile
 
 from flask import Flask, render_template, request, send_file
 from flask_session import Session
@@ -34,14 +33,6 @@ def convert_to_path(programs : list):
         output.append(path)
     return output
 
-def zip_files(programs : list):
-    zipObj = ZipFile('Output/programs.zip', 'w')
-
-    for program in programs:
-        zipObj.write(program)
-    
-    zipObj.close()
-
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -60,36 +51,20 @@ def p_db():
         program_list = json_data["programs"]
         is_manual = json_data["manual"]
         company_name = json_data["company_name"]
-        
-        print(convert_to_path(programs=program_list), is_manual)
 
         if is_manual:
-            spc.create_manual(  
+            blob = spc.create_manual(
                 file=spc.findPath("safety_manual.docx"),
                 safety_documents= convert_to_path(programs=program_list),
                 company_name=company_name
             )
         else:
-            paths = spc.create_program(
+            blob = spc.create_program(
                 files=convert_to_path(programs=program_list),
                 company_name=company_name
             )
-
-            zip_files(paths)
-
-            print("program")
         
-        return 'Success', 200
-
-@app.route("/download_sm")
-def download_sm():
-    path = "Output/new_safety_manual.docx"
-    return send_file(path, as_attachment=True)
-
-@app.route("/download_sp")
-def download_sp():
-    path = "Output/programs.zip"
-    return send_file(path, as_attachment=True)
+        return blob, 200
 
 
 if __name__ == "__main__":

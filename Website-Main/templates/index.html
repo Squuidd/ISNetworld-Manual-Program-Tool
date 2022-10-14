@@ -29,23 +29,23 @@
         <div class="horizontal_aligner center_parent"> 
 
           <div class="center_child" id="btn_container_left">
-            <button class="create_btn" onclick="getSelected(true); showDownload('manual')">
+            <button class="create_btn" onclick="generateDocument(true)">
               Create Safety Manual
             </button>
-            <br>
-            <p id="sm_download" style="display: none;">
-              <a href="{{ url_for('.download_sm') }}">Download Safety Manual</a>
-            </p>
+<!--            <br>-->
+<!--            <button id="sm_download" class="create_btn">-->
+<!--              Download Safety Manual-->
+<!--            </button>-->
           </div>
 
           <div class="center_child" id="btn_container_right">
-            <button class="create_btn" onclick="getSelected(false); showDownload('program')")>
+            <button class="create_btn" onclick="generateDocument(false)")>
               Create Safety Program
             </button>
-            <br>
-            <p id="sp_download" style="display: none;">
-              <a href="{{ url_for('.download_sp') }}">Download Safety Program</a>
-            </p>
+<!--            <br>-->
+<!--            <p id="sp_download" style="display: none;">-->
+<!--              <a href="">Download Safety Program</a>-->
+<!--            </p>-->
           </div>
 
         </div>

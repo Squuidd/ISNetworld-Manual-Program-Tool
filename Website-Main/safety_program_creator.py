@@ -2,17 +2,38 @@ from venv import create
 from docxtpl import DocxTemplate
 from docxtpl.subdoc import Subdoc, SubdocComposer
 from docx import Document
+from zipfile import ZipFile
 
-from lxml import etree
+from lxml import etree # TODO for debug
 import re
+import io
 
 import types
 
 import os
 
-import win32com.client
+# import win32com.client
 
-import inspect, os
+# import inspect, os
+
+def findPath(file_name):
+    script_dir = os.path.dirname(__file__) # absolute dir the script is in
+    rel_path = f"Safety Programs/{file_name}"
+    abs_file_path = os.path.join(script_dir, rel_path)
+    return abs_file_path
+
+# def update_toc(docx_file):
+#     word = win32com.client.DispatchEx("Word.Application")
+#     doc = word.Documents.Open(docx_file)
+#     doc.TablesOfContents(1).Update()
+#     doc.Close(SaveChanges=True)
+#     word.Quit()
+
+def DocumentBytes(doc):
+    file_stream = io.BytesIO()
+    doc.save(file_stream)
+    file_stream.seek(0)
+    return file_stream.getvalue()
 
 class DummyDoc(Subdoc):
     def __init__(self, tpl, xml):
@@ -21,19 +42,6 @@ class DummyDoc(Subdoc):
 
     def _get_xml(self):
         return self.xml
-
-def findPath(file_name):
-    script_dir = os.path.dirname(__file__) # absolute dir the script is in
-    rel_path = f"Safety Programs/{file_name}"
-    abs_file_path = os.path.join(script_dir, rel_path)
-    return abs_file_path
-
-def update_toc(docx_file):
-    word = win32com.client.DispatchEx("Word.Application")
-    doc = word.Documents.Open(docx_file)
-    doc.TablesOfContents(1).Update()
-    doc.Close(SaveChanges=True)
-    word.Quit()
 
 def create_manual(
         file,
@@ -63,12 +71,9 @@ def create_manual(
         "company_name": company_name
     }
 
-    main_document.render(ctx)
+    main_document.render(ctx)# Render
 
-    save_path = 'Output/new_safety_manual.docx'
-
-    main_document.save(save_path)
-    
+    return DocumentBytes(main_document)
 
     # updates TOC *windows only*
     # script_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -76,34 +81,33 @@ def create_manual(
     # file_path = os.path.join(script_dir, file_name)
     # update_toc(file_path)
 
-    print(etree.tostring(main_document.element.body, encoding='unicode', pretty_print=True))
+    # print(etree.tostring(main_document.element.body, encoding='unicode', pretty_print=True))
 
 def create_program(
-        files:list, 
+        files:list, # TODO Should maybe be bytes
         company_name:str
-):  
+):
 
-    paths = []
+    mem_zip = io.BytesIO()
+    with ZipFile(mem_zip, mode="w") as zf:
+        for file in files:
+            main_document = DocxTemplate(file)
 
-    for file in files:
-        main_document = DocxTemplate(file)
+            ctx = {
+                "company_name": company_name
+            }
 
-        ctx = {
-            "company_name": company_name
-        }
+            main_document.render(ctx)
 
-        main_document.render(ctx)
+            fs = DocumentBytes(main_document)
+            filename = os.path.basename(file)
+            zf.writestr(filename, fs)
+        zf.close()
 
-        filename = os.path.basename(file)
-
-        save_path = f'Output/Programs/{filename}'
-        paths.append(save_path)
-        main_document.save(save_path)
-
-    return paths
+    return mem_zip.getvalue()
        
 
-#create_manual(findPath("safety_manual.docx"), [findPath("aerial lifts.docx"), findPath("cranes.docx"), findPath("cadmium.docx")], "Test Name LLC.")
+# create_manual(findPath("safety_manual.docx"), [findPath("aerial lifts.docx"), findPath("cranes.docx"), findPath("cadmium.docx")], "Test Name LLC.")
 #update_toc('Output/new_safety_manual.docx')
 
 #create_program(findPath("aerial lifts.docx"), "Test Name.")
