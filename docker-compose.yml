@@ -1,0 +1,7 @@
+services:
+  libreoffice:
+    build: ./libreoffice
+    container_name: libreoffice
+    restart: always
+    ports:
+      - "60000:8100"
