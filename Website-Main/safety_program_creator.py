@@ -86,10 +86,10 @@ def create_manual(
     
 
     # updates TOC *windows only*
-    script_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-    file_name = save_path
-    file_path = os.path.join(script_dir, file_name)
-    update_toc(file_path)
+    # script_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    # file_name = save_path
+    # file_path = os.path.join(script_dir, file_name)
+    # update_toc(file_path)
 
     # print(etree.tostring(main_document.element.body, encoding='unicode', pretty_print=True))
     return DocumentBytes(main_document)
