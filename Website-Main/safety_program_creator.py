@@ -12,10 +12,10 @@ import types
 
 import os
 
-import field_updater
-UNO = field_updater.UNO(
-    "127.0.0.1", "60000"
-)
+# import field_updater
+# UNO = field_updater.UNO(
+#     "127.0.0.1", "60000"
+# )
 
 # import win32com.client
 
@@ -83,7 +83,7 @@ def create_manual(
 
     main_document.render(ctx)  # Render
 
-    return UNO.update(DocumentBytes(main_document))
+    return DocumentBytes(main_document)
 
     # updates TOC *windows only*
     # script_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))

@@ -2,19 +2,24 @@
 import sqlalchemy.engine
 from flask_sqlalchemy import SQLAlchemy
 
-from main import db
 import safety_program_creator as spc
 
 import os
+
+from app import app
+db = SQLAlchemy(app)
 
 class Safety_Program(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), unique=False, nullable=False)
     path = db.Column(db.String(), unique=False, nullable=False)
 
+# with app.app_context():
+#     db.create_all()
+#     db.session.commit()
 
-db.create_all()
-db.session.commit()
+
+
 
 # create function that gets all the file names and paths and updates the db all at once
 
@@ -47,9 +52,10 @@ def parse_db():
     return docs
 
 # update_db()
-db.create_all()
-db.session.commit()
-
+with app.app_context():
+    db.create_all()
+    db.session.commit()
+session = db.session
 
 
 # programs = db.session.query(Safety_Program)
