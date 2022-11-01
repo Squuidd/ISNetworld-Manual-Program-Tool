@@ -17,7 +17,7 @@ import os
 #     "127.0.0.1", "60000"
 # )
 
-# import win32com.client
+import win32com.client
 
 # import inspect, os
 
@@ -28,12 +28,12 @@ def findPath(file_name):
     return abs_file_path
 
 
-# def update_toc(docx_file):
-#     word = win32com.client.DispatchEx("Word.Application")
-#     doc = word.Documents.Open(docx_file)
-#     doc.TablesOfContents(1).Update()
-#     doc.Close(SaveChanges=True)
-#     word.Quit()
+def update_toc(docx_file):
+    word = win32com.client.DispatchEx("Word.Application")
+    doc = word.Documents.Open(docx_file)
+    doc.TablesOfContents(1).Update()
+    doc.Close(SaveChanges=True)
+    word.Quit()
 
 def DocumentBytes(doc):
     file_stream = io.BytesIO()
@@ -83,16 +83,16 @@ def create_manual(
 
     main_document.render(ctx)  # Render
 
-    return DocumentBytes(main_document)
+    
 
     # updates TOC *windows only*
-    # script_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-    # file_name = save_path
-    # file_path = os.path.join(script_dir, file_name)
-    # update_toc(file_path)
+    script_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    file_name = save_path
+    file_path = os.path.join(script_dir, file_name)
+    update_toc(file_path)
 
     # print(etree.tostring(main_document.element.body, encoding='unicode', pretty_print=True))
-
+    return DocumentBytes(main_document)
 
 def create_program(
         files: list,  # TODO Should maybe be bytes
