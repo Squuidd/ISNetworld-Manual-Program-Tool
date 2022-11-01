@@ -20,10 +20,10 @@ app.secret_key = os.urandom(16)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///safety_program.db"
 app.config['SESSION_TYPE'] = "filesystem"
 
-import database as db
+import database 
 
 # Init db
-
+db = SQLAlchemy(app)
 
 
 def convert_to_path(programs : list):
@@ -42,7 +42,7 @@ def home():
 def p_db():
     if request.method == 'GET':
         sp_names = {
-            "Programs": db.parse_db()
+            "Programs": database.parse_db()
         }
         return jsonify(sp_names)
 

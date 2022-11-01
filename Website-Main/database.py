@@ -6,8 +6,8 @@ import safety_program_creator as spc
 
 import os
 
-from app import app
-db = SQLAlchemy(app)
+from app import db
+
 
 class Safety_Program(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,8 +17,6 @@ class Safety_Program(db.Model):
 # with app.app_context():
 #     db.create_all()
 #     db.session.commit()
-
-
 
 
 # create function that gets all the file names and paths and updates the db all at once
@@ -52,10 +50,13 @@ def parse_db():
     return docs
 
 # update_db()
-with app.app_context():
-    db.create_all()
-    db.session.commit()
-session = db.session
+db.create_all()
+db.session.commit()
+
+# with app.app_context():
+#     db.create_all()
+#     db.session.commit()
+# session = db.session
 
 
 # programs = db.session.query(Safety_Program)
