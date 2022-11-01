@@ -49,7 +49,7 @@ def parse_db():
         # print(program.name)
     return docs
 
-# update_db()
+update_db()
 db.create_all()
 db.session.commit()
 
