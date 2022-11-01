@@ -2,13 +2,13 @@
 import sqlalchemy.engine
 from flask_sqlalchemy import SQLAlchemy
 
-import safety_program_creator as spc
+# import safety_program_creator as spc
 
 import os
 
 from app import app
 db = SQLAlchemy(app)
-
+db.init_app(app)
 class Safety_Program(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), unique=False, nullable=False)
@@ -42,7 +42,7 @@ def update_db():
 def parse_db():
     programs = db.session.query(Safety_Program)
     docs = []
-
+    print(programs)
     for program in programs:
         program_data = []
         program_data.append(program.name)
@@ -56,7 +56,6 @@ with app.app_context():
     db.create_all()
     db.session.commit()
 session = db.session
-
 
 # programs = db.session.query(Safety_Program)
 # # print(programs.all()[0].name)
