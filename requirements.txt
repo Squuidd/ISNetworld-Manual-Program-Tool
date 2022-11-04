@@ -19,7 +19,6 @@ pipreqs==0.4.11
 py==1.4.22
 pytest==2.6.0
 python-docx==0.8.11
-pywin32==304
 requests==2.28.1
 six==1.16.0
 SQLAlchemy==1.4.41
