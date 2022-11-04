@@ -1,1 +1,1 @@
-web: gunicorn 88888888888888888888888888888888/app:app
+web: gunicorn app:app
