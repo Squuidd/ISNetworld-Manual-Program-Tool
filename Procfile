@@ -1,1 +1,1 @@
-web: gunicorn asapcompliance:app
+web: gunicorn app:app
