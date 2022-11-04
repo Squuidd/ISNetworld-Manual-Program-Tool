@@ -95,49 +95,60 @@ function searchSelected() {
 
 function getName() {
     let name = document.getElementById('company_name').value;
-    console.log(typeof(name))
     // check that there is a name
-    return name;
+    if(name != "")
+    {
+        return name;
+    }
+    else 
+    {
+        return false
+    }
+    
 }
 
 async function generateDocument(is_manual) {
     let selectedElements = document.getElementsByClassName("selected_program");
     let selectedPrograms = [];
 
-
     let company_name = getName();
-
-
-    for (let i = 0; i < selectedElements.length; i++) {
-        selectedPrograms.push(selectedElements[i].innerHTML);
+    if(company_name == false)
+    { 
+        alert("Please enter your company name.")
     }
-
-    let data = {
-        programs: selectedPrograms,
-        manual: is_manual,
-        company_name: company_name
-    };
-
-    let response = await fetch('/safety_programs',
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
+    else
+    {
+        for (let i = 0; i < selectedElements.length; i++) {
+            selectedPrograms.push(selectedElements[i].innerHTML);
         }
-    )
 
-    // TODO generate names?
-    let filename
-    if (is_manual) {
-        filename = "Manual.docx"
-    }
-    else {
-        filename = "Programs.zip"
-    }
+        let data = {
+            programs: selectedPrograms,
+            manual: is_manual,
+            company_name: company_name
+        };
 
-    saveBlob(await response.blob(), filename)
+        let response = await fetch('/safety_programs',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            }
+        )
+
+        // TODO generate names?
+        let filename
+        if (is_manual) {
+            filename = "Manual.docx"
+        }
+        else {
+            filename = "Programs.zip"
+        }
+
+        saveBlob(await response.blob(), filename)
+    }
 }
 
 
