@@ -2,3 +2,4 @@ run:
   worker:
     command:
       -python app.py
+    image: web
