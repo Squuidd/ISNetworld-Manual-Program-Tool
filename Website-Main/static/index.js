@@ -95,7 +95,7 @@ function searchSelected() {
 
 function getName() {
     let name = document.getElementById('company_name').value;
-    alert(name);
+    console.log(typeof(name))
     // check that there is a name
     return name;
 }
@@ -104,7 +104,9 @@ async function generateDocument(is_manual) {
     let selectedElements = document.getElementsByClassName("selected_program");
     let selectedPrograms = [];
 
+
     let company_name = getName();
+
 
     for (let i = 0; i < selectedElements.length; i++) {
         selectedPrograms.push(selectedElements[i].innerHTML);

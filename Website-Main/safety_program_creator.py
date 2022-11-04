@@ -27,7 +27,6 @@ def findPath(file_name):
     abs_file_path = os.path.join(script_dir, rel_path)
     return abs_file_path
 
-
 def update_toc(docx_file):
     word = win32com.client.DispatchEx("Word.Application")
     doc = word.Documents.Open(docx_file)
@@ -91,8 +90,11 @@ def create_manual(
     # file_path = os.path.join(script_dir, file_name)
     # update_toc(file_path)
 
+    #doc = update_toc(path)
+
     # print(etree.tostring(main_document.element.body, encoding='unicode', pretty_print=True))
-    return DocumentBytes(main_document)
+    return DocumentBytes(main_document) # doc was main_document
+
 
 def create_program(
         files: list,  # TODO Should maybe be bytes
